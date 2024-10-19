@@ -8,7 +8,7 @@
 
 ### Решение 1
 
-```
+```sql
 select sum(data_length) , sum(index_length), TRUNCATE (sum(index_length)*100.0/sum(data_length),1) as '%'
 from information_schema.tables
 where table_schema='sakila' and data_length is not null;
@@ -41,7 +41,9 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
  - Функция **DATE()** на **p.payment_date**, может препятствовать использованию индексов.  
  - Отсутствие индексов необходимых индексов.
 
-```
+Оптимизация:
+
+```sql
 SELECT DISTINCT CONCAT(c.last_name, ' ', c.first_name),
        SUM(p.amount) OVER (PARTITION BY c.customer_id, f.title)
 FROM payment p
@@ -54,7 +56,7 @@ WHERE DATE(p.payment_date) = '2005-07-30';
 
 ![Задание 2](https://github.com/Markin-AI/12-5/blob/main/img/2-2.png)
 
-```
+```sql
 SELECT DISTINCT CONCAT(c.last_name, ' ', c.first_name),
        SUM(p.amount) OVER (PARTITION BY c.customer_id, f.title)
 FROM payment p
